@@ -1,0 +1,23 @@
+{
+  "name": "meyda-worklet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildForClipboard": "./node_modules/.bin/webpack --config=webpack.config.js --mode=development && cat dist/main.js | pbcopy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-loader": "^8.0.6",
+    "raw-loader": "^3.1.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "worker-loader": "^2.0.0"
+  }
+}

@@ -2,6 +2,8 @@ import { PROCESSOR_NAME } from './shared-config';
 import AnalyzerProcessor from './MeydaAnalyzerNodeProcessor.worklet.js';
 
 // const AnalyzerNodeData = `
+// "use strict";
+// eval(\`
 // const PROCESSOR_NAME = 'meydaanalyzer';
 
 // console.log(registerProcessor);
@@ -23,7 +25,7 @@ import AnalyzerProcessor from './MeydaAnalyzerNodeProcessor.worklet.js';
 //         return true;
 //     }
 // })
-// `;
+// \`)`;
 
 // const blob = new Blob([AnalyzerNodeData], { type: 'application/javascript; charset=utf-8' })
 // const AnalyzerProcessor = URL.createObjectURL(blob)

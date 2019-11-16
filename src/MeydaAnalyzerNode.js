@@ -1,25 +1,32 @@
-// import AnalyzerProcessor from './MeydaAnalyzerNodeProcessor.worker.js';
 import { PROCESSOR_NAME } from './shared-config';
+import AnalyzerProcessor from './MeydaAnalyzerNodeProcessor.worklet.js';
 
-const AnalyzerProcessor = `
-registerProcessor('meydaanalyzer', class extends AudioWorkletProcessor {
-    constructor(options) {
-        super(options);
+// const AnalyzerNodeData = `
+// const PROCESSOR_NAME = 'meydaanalyzer';
 
-        this.port.onmessage = message => {
-            console.log(message);
-            this.port.postMessage({
-                type: "now yell outside the thread"
-            })
-        }
+// console.log(registerProcessor);
 
-    }
+// registerProcessor(PROCESSOR_NAME, class extends AudioWorkletProcessor {
+//     constructor(options) {
+//         super(options);
 
-    process(inputs, outputs, parameters) {
-        return true;
-    }
-})
-`
+//         this.port.onmessage = message => {
+//             console.log(message);
+//             this.port.postMessage({
+//                 type: "now yell outside the thread"
+//             })
+//         }
+
+//     }
+
+//     process(inputs, outputs, parameters) {
+//         return true;
+//     }
+// })
+// `;
+
+// const blob = new Blob([AnalyzerNodeData], { type: 'application/javascript; charset=utf-8' })
+// const AnalyzerProcessor = URL.createObjectURL(blob)
 
 export class MeydaAnalyzerNode extends AudioWorkletNode {
     constructor(audioContext, options) {
@@ -39,15 +46,16 @@ export class MeydaAnalyzerNode extends AudioWorkletNode {
     }
 }
 
-export function createMeydaAnalyzerNode(audioContext, options) {
-    const blob = new Blob([ AnalyzerProcessor ], { type: 'application/javascript; charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    console.log(url);
-    return audioContext.audioWorklet.addModule(url).then(() => {
+export async function createMeydaAnalyzerNode(audioContext, options) {
+    const r = await fetch(AnalyzerProcessor);
+    const text = await r.text();
+    console.log(text);
+    
+    return audioContext.audioWorklet.addModule(AnalyzerProcessor).then(() => {
         const node = new MeydaAnalyzerNode(audioContext);
 
         node.yellSuccess();
     }).catch(e => {
-        debugger;
+        console.error(e);
     });
 }

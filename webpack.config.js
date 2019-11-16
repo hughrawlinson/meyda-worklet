@@ -3,17 +3,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.worker\.js$/,
+        test: /\.worklet\.js$/,
         use: [
           {
-            loader: 'raw-loader',
-          },
-          {
-            loader: 'babel-loader',
+            loader: 'worklet-loader',
             options: {
-              presets: ['@babel/preset-env']
+              inline: true
             }
-          }
+          },
+          // {
+          //   loader: 'babel-loader',
+          //   options: {
+          //     presets: ['@babel/preset-env']
+          //   }
+          // }
         ]
       }
     ]
